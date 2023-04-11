@@ -1,20 +1,16 @@
 require("dotenv").config();
 const express = require("express");
-// import routers here
+const showRouter = require("./routes/showRouter");
+const locationRouter = require("./routes/locationRouter");
+const bandRouter = require("./routes/bandRouter");
+const userRouter = require("./routes/userRouter");
 
 const app = express();
 
-// app.use routers here
-
-// move get to controller
-app.get("/", function (req, res) {
-    try {
-        res.send("Hello");
-    } catch (error) {
-        console.log(error);
-        res.status(500).send("Internal Server Error");
-    }
-});
+app.use("/show", showRouter);
+app.use("/location", locationRouter);
+app.use("/band", bandRouter);
+app.use("/user", userRouter);
 
 const port = 3000;
 
