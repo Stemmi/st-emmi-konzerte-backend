@@ -1,0 +1,46 @@
+{
+    "shows": [
+        {
+            "id": 0,
+            "title": "Umsonst & Draußen",
+            "date": "2022-08-26",
+            "locationId": 0,
+            "bandsIds": [0, 1],
+            "text": "Dancing in the rain mit den Heartliners und Spandau!",
+            "poster": {
+                "filename": "2022-08-26-boizenburg.jpg",
+                "alt": ""
+            },
+            "userId": 0
+        },
+
+        {
+            "id": 1,
+            "title": "Musik für Rainer Festival",
+            "date": "2019-04-30",
+            "locationId": 1,
+            "bandsIds": [],
+            "text": "Mit BA-B, Andi und Ich, Kpt Plasto, US Altona, Sherlock Fish, Chalk Diver, Island Monkeys.",
+            "poster": {
+                "filename": "2018-04-30-neuland.jpg",
+                "alt": "Handgeschriebenes Schild: Moinsen! alle Getränke 0,50 €, Freisaufen 20 €"
+            },
+            "userId": 0
+        },
+
+        {
+            "id": 2,
+            "title": "Example Title",
+            "date": "2023-04-10",
+            "locationId": 1,
+            "bandsIds": [],
+            "text": "Some words about the show.",
+            "poster": {
+                "filename": "",
+                "alt": ""
+            },
+            "userId": 0
+        }
+    ]
+}
+

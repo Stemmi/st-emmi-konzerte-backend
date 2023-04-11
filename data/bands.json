@@ -1,0 +1,19 @@
+{
+    "bands": [
+        {
+            "id": 0,
+            "name": "Heartliners",
+            "url": ""
+        },
+        {
+            "id": 1,
+            "name": "Spandau",
+            "url": ""
+        },
+        {
+            "id": 2,
+            "name": "",
+            "url": ""
+        }
+    ]
+}
