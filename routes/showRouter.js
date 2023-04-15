@@ -8,5 +8,4 @@ router.get("/latest", showController.latestShowHandler);
 router.get("/at/:locationId", showController.showsByLocationHandler);
 router.get("/:id", showController.showByIdHandler);
 
-
 module.exports = router;
