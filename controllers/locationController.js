@@ -1,8 +1,6 @@
 const db = require("../databases/db.js");
 const locationsDB = require("../databases/locationsDB.js");
 
-const locations = require("../data/locations.json");
-
 async function allLocationsHandler(req, res) {
     try {
         db.startTransaction();
