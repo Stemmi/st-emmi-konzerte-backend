@@ -1,9 +1,9 @@
-const express = require("express");
-const router = express.Router();
+// const express = require("express");
+// const router = express.Router();
 
-const bandController = require("../controllers/bandController");
+// const bandController = require("../controllers/bandController");
 
-router.get("/", bandController.allBandsHandler);
-router.get("/:id", bandController.bandByIdHandler);
+// router.get("/", bandController.allBandsHandler);
+// router.get("/:id", bandController.bandByIdHandler);
 
-module.exports = router;
+// module.exports = router;

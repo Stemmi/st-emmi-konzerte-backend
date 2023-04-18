@@ -5,7 +5,7 @@ const cors = require("cors");
 
 const showRouter = require("./routes/showRouter");
 const locationRouter = require("./routes/locationRouter");
-const bandRouter = require("./routes/bandRouter");
+// const bandRouter = require("./routes/bandRouter");
 const userRouter = require("./routes/userRouter");
 
 const app = express();
@@ -16,7 +16,7 @@ app.use(cors({
 
 app.use("/show", showRouter);
 app.use("/location", locationRouter);
-app.use("/band", bandRouter);
+// app.use("/band", bandRouter);
 app.use("/user", userRouter);
 
 const port = 3000;
