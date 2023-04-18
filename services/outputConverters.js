@@ -4,7 +4,9 @@ function createShowsList(shows, locations) {
         return {
             id: show.id,
             title: show.title,
+            locationId: location.id,
             location: {
+                id: location.id,
                 name: location.name,
                 city: location.city
             },
@@ -24,7 +26,9 @@ function createShowObject(show, location) {
     const showObject = {
         id: show.id,
         title: show.title,
+        locationId: location.id,
         location: {
+            id: location.id,
             name: location.name,
             city: location.city,
             long: location.long,

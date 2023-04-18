@@ -10,6 +10,7 @@ async function allShowsHandler(req, res) {
         const count = await showsDB.countShows();
         const shows = await showsDB.getShows(); // later change this to pagination / limit
         const locations = await locationsDB.getLocations(); // later change this to only the needed locations
+        // or... provide locations at all?
         db.commit();
 
         const results = outputConverters.createShowsList(shows, locations);
