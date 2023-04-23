@@ -41,6 +41,6 @@ module.exports = {
     countShowsByLocation,
     getShows,
     getShowsByLocation,
-    // getShowById,
+    getShowById,
     getLatestShow
 }

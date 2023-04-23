@@ -75,7 +75,6 @@ async function showByIdHandler(req, res) {
 
 module.exports = {
     allShowsHandler,
-    showsByLocationHandler
-    // ,
-    // showByIdHandler
+    showsByLocationHandler,
+    showByIdHandler
 }

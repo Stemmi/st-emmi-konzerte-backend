@@ -27,7 +27,6 @@ async function getUserById(id) {
 module.exports = {
     // countUsers,
     // getUsers,
-    getUsersByIds
-    // ,
-    // getUserById
+    getUsersByIds,
+    getUserById
 }
