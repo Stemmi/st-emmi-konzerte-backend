@@ -1,5 +1,7 @@
 const db = require("../databases/db.js");
 const locationsDB = require("../databases/locationsDB.js");
+const showsDB = require("../databases/showsDB.js");
+
 
 async function allLocationsHandler(req, res) {
     try {
@@ -13,7 +15,6 @@ async function allLocationsHandler(req, res) {
                 id: location.id,
                 name: location.name,
                 city: location.city,
-                url: location.url,
                 lat: location.lat,
                 long: location.long
             }
@@ -50,7 +51,32 @@ async function locationByIdHandler(req, res) {
     }
 }
 
+async function latestLocationHandler(req, res) {
+    try {
+        db.startTransaction();
+        const latestShow = await showsDB.getLatestShow();
+        const location = await locationsDB.getLocationById(latestShow.location_id);
+        db.commit();
+        const response = {
+            id: location.id,
+            name: location.name,
+            city: location.city,
+            url: location.url,
+            lat: location.lat,
+            long: location.long
+        }
+
+        res.json(response);
+
+    } catch(error) {
+        db.rollback();
+        console.log(error);
+        res.status(500).send("Internal Server Error");
+    } 
+}
+
 module.exports = {
     allLocationsHandler,
-    locationByIdHandler
+    // locationByIdHandler,
+    latestLocationHandler
 }

@@ -12,6 +12,12 @@ async function getLocations() {
     return results;
 }
 
+async function getLocationsByIds(ids) {
+    const dbQuery = `SELECT * FROM locations WHERE id in (?);`;
+    const results = await db.query(dbQuery, [ids]);
+    return results;
+}
+
 async function getLocationById(id) {
     const dbQuery = "SELECT * FROM locations WHERE id = ?;";
     const results = await db.query(dbQuery, id);
@@ -21,5 +27,6 @@ async function getLocationById(id) {
 module.exports = {
     countLocations,
     getLocations,
+    getLocationsByIds,
     getLocationById
 }

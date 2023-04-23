@@ -1,36 +1,36 @@
 const db = require("../databases/db.js");
-const userDB = require("../databases/userDB.js");
+const usersDB = require("../databases/usersDB.js");
 
-// async function allUsersHandler(req, res) {
-//     try {
-//         db.startTransaction();
-//         const count = await userDB.countUsers();
-//         const users = await userDB.getUsers();
-//         db.commit();
+async function allUsersHandler(req, res) {
+    try {
+        db.startTransaction();
+        const count = await usersDB.countUsers();
+        const users = await usersDB.getUsers();
+        db.commit();
 
-//         const results = users.map(function(user) {
-//             return {
-//                 id: user.id,
-//                 name: user.name,
-//                 image: user.image
-//             }
-//         });
-//         const response = {
-//             count: count,
-//             results: results
-//         }
+        const results = users.map(function(user) {
+            return {
+                id: user.id,
+                name: user.name,
+                image: user.image
+            }
+        });
+        const response = {
+            count: count,
+            results: results
+        }
         
-//         res.json(response);
-//     } catch (error) {
-//         db.rollback();
-//         console.log(error);
-//         res.status(500).send("Internal Server Error");
-//     }
-// }
+        res.json(response);
+    } catch (error) {
+        db.rollback();
+        console.log(error);
+        res.status(500).send("Internal Server Error");
+    }
+}
 
 async function userByIdHandler(req, res) {
     try {
-        const user = await userDB.getUserById(req.params.id);
+        const user = await usersDB.getUserById(req.params.id);
         const response = {
             id: user.id,
             name: user.name,
@@ -46,6 +46,6 @@ async function userByIdHandler(req, res) {
 }
 
 module.exports = {
-    // allUsersHandler,
+    allUsersHandler,
     userByIdHandler
 }
