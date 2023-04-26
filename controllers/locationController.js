@@ -1,14 +1,11 @@
-const db = require("../databases/db.js");
 const locationsDB = require("../databases/locationsDB.js");
 const showsDB = require("../databases/showsDB.js");
 
 
 async function allLocationsHandler(req, res) {
     try {
-        db.startTransaction();
         const count = await locationsDB.countLocations();
         const locations = await locationsDB.getLocations();
-        db.commit();
 
         const results = locations.map(function(location) {
             return {
@@ -26,7 +23,6 @@ async function allLocationsHandler(req, res) {
         
         res.json(response);
     } catch (error) {
-        db.rollback();
         console.log(error);
         res.status(500).send("Internal Server Error");
     }
@@ -35,6 +31,7 @@ async function allLocationsHandler(req, res) {
 async function locationByIdHandler(req, res) {
     try {
         const location = await locationsDB.getLocationById(req.params.id);
+
         const response = {
             id: location.id,
             name: location.name,
@@ -53,10 +50,9 @@ async function locationByIdHandler(req, res) {
 
 async function latestLocationHandler(req, res) {
     try {
-        db.startTransaction();
         const latestShow = await showsDB.getLatestShow();
         const location = await locationsDB.getLocationById(latestShow.location_id);
-        db.commit();
+
         const response = {
             id: location.id,
             name: location.name,
@@ -69,7 +65,6 @@ async function latestLocationHandler(req, res) {
         res.json(response);
 
     } catch(error) {
-        db.rollback();
         console.log(error);
         res.status(500).send("Internal Server Error");
     } 

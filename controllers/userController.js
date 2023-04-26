@@ -1,12 +1,9 @@
-const db = require("../databases/db.js");
 const usersDB = require("../databases/usersDB.js");
 
 async function allUsersHandler(req, res) {
     try {
-        db.startTransaction();
         const count = await usersDB.countUsers();
         const users = await usersDB.getUsers();
-        db.commit();
 
         const results = users.map(function(user) {
             return {
@@ -22,7 +19,6 @@ async function allUsersHandler(req, res) {
         
         res.json(response);
     } catch (error) {
-        db.rollback();
         console.log(error);
         res.status(500).send("Internal Server Error");
     }
@@ -31,6 +27,7 @@ async function allUsersHandler(req, res) {
 async function userByIdHandler(req, res) {
     try {
         const user = await usersDB.getUserById(req.params.id);
+
         const response = {
             id: user.id,
             name: user.name,
