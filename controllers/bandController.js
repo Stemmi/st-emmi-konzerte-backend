@@ -67,5 +67,5 @@ async function bandsByShowHandler(req, res) {
 module.exports = {
     // allBandsHandler,
     // bandByIdHandler,
-    // bandsByShowHandler
+    bandsByShowHandler
 }

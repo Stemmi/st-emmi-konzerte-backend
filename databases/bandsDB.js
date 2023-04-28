@@ -33,5 +33,5 @@ module.exports = {
     // countBands,
     // getBands,
     // getBandById,
-    // getBandsByShowId
+    getBandsByShowId
 }
