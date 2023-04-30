@@ -10,14 +10,12 @@ const userRouter = require("./routes/userRouter");
 
 const app = express();
 
-app.use(cors({
-    origin: "*"
-})); // this has to be configured
+app.use(cors());
 
-app.use("/show", showRouter);
-app.use("/location", locationRouter);
-// app.use("/band", bandRouter);
-app.use("/user", userRouter);
+app.use("/api/shows", showRouter);
+app.use("/api/locations", locationRouter);
+// app.use("/api/bands", bandRouter);
+app.use("/api/users", userRouter);
 
 const port = 3000;
 
