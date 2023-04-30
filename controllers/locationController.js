@@ -1,27 +1,10 @@
-const locationsDB = require("../databases/locationsDB.js");
-const showsDB = require("../databases/showsDB.js");
-
+const locationService = require("../services/locationService.js");
 
 async function allLocationsHandler(req, res) {
     try {
-        const count = await locationsDB.countLocations();
-        const locations = await locationsDB.getLocations();
-
-        const results = locations.map(function(location) {
-            return {
-                id: location.id,
-                name: location.name,
-                city: location.city,
-                lat: location.lat,
-                long: location.long
-            }
-        });
-        const response = {
-            count: count,
-            results: results
-        }
-        
+        const response = await locationService.getLocations();
         res.json(response);
+
     } catch (error) {
         console.log(error);
         res.status(500).send("Internal Server Error");
@@ -30,18 +13,9 @@ async function allLocationsHandler(req, res) {
 
 async function locationByIdHandler(req, res) {
     try {
-        const location = await locationsDB.getLocationById(req.params.id);
-
-        const response = {
-            id: location.id,
-            name: location.name,
-            city: location.city,
-            url: location.url,
-            lat: location.lat,
-            long: location.long
-        }
-
+        const response = await locationService.getLocationById(req.params.id);
         res.json(response);
+
     } catch (error) {
         console.log(error);
         res.status(500).send("Internal Server Error");
@@ -50,18 +24,7 @@ async function locationByIdHandler(req, res) {
 
 async function latestLocationHandler(req, res) {
     try {
-        const latestShow = await showsDB.getLatestShow();
-        const location = await locationsDB.getLocationById(latestShow.location_id);
-
-        const response = {
-            id: location.id,
-            name: location.name,
-            city: location.city,
-            url: location.url,
-            lat: location.lat,
-            long: location.long
-        }
-
+        const response = await locationService.getLatestLocation();
         res.json(response);
 
     } catch(error) {

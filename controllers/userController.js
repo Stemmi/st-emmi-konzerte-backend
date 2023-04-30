@@ -1,23 +1,10 @@
-const usersDB = require("../databases/usersDB.js");
+const userService = require("../services/userService.js");
 
 async function allUsersHandler(req, res) {
     try {
-        const count = await usersDB.countUsers();
-        const users = await usersDB.getUsers();
-
-        const results = users.map(function(user) {
-            return {
-                id: user.id,
-                name: user.name,
-                image: user.image
-            }
-        });
-        const response = {
-            count: count,
-            results: results
-        }
-        
+        const response = userService.getUsers();
         res.json(response);
+
     } catch (error) {
         console.log(error);
         res.status(500).send("Internal Server Error");
@@ -26,14 +13,7 @@ async function allUsersHandler(req, res) {
 
 async function userByIdHandler(req, res) {
     try {
-        const user = await usersDB.getUserById(req.params.id);
-
-        const response = {
-            id: user.id,
-            name: user.name,
-            image: user.image,
-        }
-
+        const response = userService.getUserById(req.params.id);
         res.json(response);
 
     } catch (error) {
