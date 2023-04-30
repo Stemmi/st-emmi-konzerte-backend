@@ -28,6 +28,13 @@ async function getShows() {
 async function getShowsByLocation(id) {
     try {
         const count = await showsDB.countShowsByLocation(id);
+        if (count === 0) {
+            return {
+                count: 0,
+                results: []
+            }
+        }
+
         const shows = await showsDB.getShowsByLocation(id);
         const location = await locationsDB.getLocationById(id);
         const userIds = [...new Set(shows.map(show => show.user_id))];
