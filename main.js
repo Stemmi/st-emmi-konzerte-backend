@@ -1,16 +1,21 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
+
+
 const showRouter = require("./routes/showRouter");
 const locationRouter = require("./routes/locationRouter");
-const bandRouter = require("./routes/bandRouter");
+// const bandRouter = require("./routes/bandRouter");
 const userRouter = require("./routes/userRouter");
 
 const app = express();
 
-app.use("/show", showRouter);
-app.use("/location", locationRouter);
-app.use("/band", bandRouter);
-app.use("/user", userRouter);
+app.use(cors());
+
+app.use("/api/shows", showRouter);
+app.use("/api/locations", locationRouter);
+// app.use("/api/bands", bandRouter);
+app.use("/api/users", userRouter);
 
 const port = 3000;
 

@@ -1,8 +1,27 @@
-const locations = require("../data/locations.json");
+const locationsDB = require("../databases/locationsDB.js");
+const showsDB = require("../databases/showsDB.js");
+
 
 async function allLocationsHandler(req, res) {
     try {
-        res.json(locations.locations);
+        const count = await locationsDB.countLocations();
+        const locations = await locationsDB.getLocations();
+
+        const results = locations.map(function(location) {
+            return {
+                id: location.id,
+                name: location.name,
+                city: location.city,
+                lat: location.lat,
+                long: location.long
+            }
+        });
+        const response = {
+            count: count,
+            results: results
+        }
+        
+        res.json(response);
     } catch (error) {
         console.log(error);
         res.status(500).send("Internal Server Error");
@@ -11,14 +30,48 @@ async function allLocationsHandler(req, res) {
 
 async function locationByIdHandler(req, res) {
     try {
-        res.json(locations.locations[req.params.id]);
+        const location = await locationsDB.getLocationById(req.params.id);
+
+        const response = {
+            id: location.id,
+            name: location.name,
+            city: location.city,
+            url: location.url,
+            lat: location.lat,
+            long: location.long
+        }
+
+        res.json(response);
     } catch (error) {
         console.log(error);
         res.status(500).send("Internal Server Error");
     }
 }
 
+async function latestLocationHandler(req, res) {
+    try {
+        const latestShow = await showsDB.getLatestShow();
+        const location = await locationsDB.getLocationById(latestShow.location_id);
+
+        const response = {
+            id: location.id,
+            name: location.name,
+            city: location.city,
+            url: location.url,
+            lat: location.lat,
+            long: location.long
+        }
+
+        res.json(response);
+
+    } catch(error) {
+        console.log(error);
+        res.status(500).send("Internal Server Error");
+    } 
+}
+
 module.exports = {
     allLocationsHandler,
-    locationByIdHandler
+    // locationByIdHandler,
+    latestLocationHandler
 }

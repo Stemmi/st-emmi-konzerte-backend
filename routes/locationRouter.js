@@ -2,8 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 const locationController = require("../controllers/locationController.js");
+const showController = require("../controllers/showController.js");
 
 router.get("/", locationController.allLocationsHandler);
-router.get("/:id", locationController.locationByIdHandler);
+router.get("/latest", locationController.latestLocationHandler);
+router.get("/:id/shows", showController.showsByLocationHandler);
+// router.get("/:id", locationController.locationByIdHandler);
 
 module.exports = router;
