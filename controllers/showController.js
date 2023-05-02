@@ -2,7 +2,7 @@ const showService = require("../services/showService.js");
 
 async function allShowsHandler(req, res) {
     try {
-        const response = await showService.getShows();
+        const response = await showService.getShows(req.query.limit, req.query.page);
         res.json(response);
 
     } catch (error) {

@@ -12,9 +12,9 @@ async function countShowsByLocation(locationId) {
     return results[0].total;
 }
 
-async function getShows() {
-    const dbQuery = "SELECT * FROM shows ORDER BY date DESC;";
-    const results = await db.query(dbQuery);
+async function getShows(limit, offset) {
+    const dbQuery = "SELECT * FROM shows ORDER BY date DESC LIMIT ? OFFSET ?;";
+    const results = await db.query(dbQuery, [ limit, offset ]);
     return results;
 }
 

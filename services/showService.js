@@ -5,10 +5,14 @@ const usersDB = require("../database/usersDB.js")
 const outputConverters = require("./outputConverters.js")
 const sanitizer = require("../services/sanitizer.js");
 
-async function getShows() {
+async function getShows(limit = 10, page = 1) {
     try {
+        const limitInt = +limit;
+        const offset = (page - 1) * limit;
         const count = await showsDB.countShows();
-        const shows = await showsDB.getShows(); // later change this to pagination / limit
+        const shows = await showsDB.getShows(limitInt, offset); // later change this to pagination / limit
+        if (!shows.length) return { count: count, results: [] };
+        
         const locationIds = [...new Set(shows.map(show => show.location_id))];
         const locations = await locationsDB.getLocationsByIds(locationIds);
         const userIds = [...new Set(shows.map(show => show.user_id))];
