@@ -1,4 +1,4 @@
-const showService = require("../services/showService.js")
+const showService = require("../services/showService.js");
 
 async function allShowsHandler(req, res) {
     try {
@@ -33,8 +33,28 @@ async function showByIdHandler(req, res) {
     }
 }
 
+async function postShowHandler(req, res) {
+    try {   
+        const response = await showService.postShow(req.body);
+        console.log(response);
+        res.json(response);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Internal Server Error");
+    }
+    
+}
+
+async function putShowHandler(req, res) {
+    console.log('put');
+    res.json({status: 'put'});
+}
+
 module.exports = {
     allShowsHandler,
     showsByLocationHandler,
-    showByIdHandler
+    showByIdHandler,
+    postShowHandler,
+    putShowHandler
 }

@@ -3,6 +3,7 @@ const locationsDB = require("../database/locationsDB.js")
 const usersDB = require("../database/usersDB.js")
 
 const outputConverters = require("./outputConverters.js")
+const sanitizer = require("../services/sanitizer.js");
 
 async function getShows() {
     try {
@@ -66,8 +67,33 @@ async function getShowById(id) {
     }
 }
 
+async function postShow(data) {
+    try {
+        const safeData = sanitizer.healShow(data);
+        console.log('safeData', safeData);
+        const params = convertToParams(data);
+        const response = await showsDB.insertShow(params);
+        console.log('response', response);
+    } catch (error) {
+        throw error;
+    }
+}
+
+function convertToParams(show) {
+    return [
+        show.title || null,
+        show.location_id || null,
+        show.date || null,
+        show.text || null,
+        show.poster_filename || null,
+        show.poster_alt || null,
+        show.user_id || null
+    ];
+}
+
 module.exports = {
     getShows,
     getShowsByLocation,
-    getShowById
+    getShowById,
+    postShow
 }

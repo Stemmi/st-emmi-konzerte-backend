@@ -36,11 +36,18 @@ async function getLatestShow() {
     return results[0];
 }
 
+async function insertShow(params) {
+    const dbQuery = "INSERT INTO shows (title, location_id, date, text, poster_filename, poster_alt, user_id) VALUES (?, ?, ?, ?, ?, ?, ?);";
+    const results = await db.query(dbQuery, params);
+    return results;
+}
+
 module.exports = {
     countShows,
     countShowsByLocation,
     getShows,
     getShowsByLocation,
     getShowById,
-    getLatestShow
+    getLatestShow,
+    insertShow
 }

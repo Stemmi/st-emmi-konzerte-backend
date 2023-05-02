@@ -9,4 +9,7 @@ router.get("/", showController.allShowsHandler);
 router.get("/:id", showController.showByIdHandler);
 router.get("/:id/bands", bandController.bandsByShowHandler);
 
+router.post("/", showController.postShowHandler);
+router.post("/:id", showController.putShowHandler);
+
 module.exports = router;
