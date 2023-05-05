@@ -8,9 +8,9 @@ const sanitizer = require("../services/sanitizer.js");
 async function getShows(limit = 10, page = 1) {
     try {
         const limitInt = +limit;
-        const offset = (page - 1) * limit;
+        const offset = (page - 1) * limitInt;
         const count = await showsDB.countShows();
-        const shows = await showsDB.getShows(limitInt, offset); // later change this to pagination / limit
+        const shows = await showsDB.getShows(limitInt, offset);
         if (!shows.length) return { count: count, results: [] };
         
         const locationIds = [...new Set(shows.map(show => show.location_id))];
@@ -75,7 +75,7 @@ async function postShow(data) {
     try {
         const safeData = sanitizer.healShow(data);
         console.log('safeData', safeData);
-        const params = convertToParams(data);
+        const params = convertToParams(safeData);
         const response = await showsDB.insertShow(params);
         console.log('response', response);
     } catch (error) {
