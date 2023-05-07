@@ -18,7 +18,7 @@ function healShow(data) {
 function text255(text) {
     const trimmed = validator.trim(text);
     const escaped = validator.escape(trimmed);
-    const limited = escaped.slice(0, 255);
+    // const limited = escaped.slice(0, 255);
     return limited;
 }
 
