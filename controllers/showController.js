@@ -34,9 +34,14 @@ async function showByIdHandler(req, res) {
 }
 
 async function postShowHandler(req, res) {
-    try {   
+    try {
+        console.log('req', req);
+        console.log('req.body', req.body);
+
+        // const requestObject = await JSON.parse(req.body)
+        // console.log(requestObject);
         const response = await showService.postShow(req.body);
-        console.log(response);
+        // console.log(response);
         res.json(response);
 
     } catch (error) {
