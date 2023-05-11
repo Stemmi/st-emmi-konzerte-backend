@@ -74,10 +74,10 @@ async function getShowById(id) {
 async function postShow(data) {
     try {
         const safeData = sanitizer.healShow(data);
-        console.log('safeData', safeData);
         const params = convertToParams(safeData);
         const response = await showsDB.insertShow(params);
-        console.log('response', response);
+        const insertedShow = getShowById(response.insertId);
+        return insertedShow;
     } catch (error) {
         throw error;
     }
