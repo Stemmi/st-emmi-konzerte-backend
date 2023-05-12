@@ -2,7 +2,6 @@ const validator = require('validator');
 
 function healShow(data) {
     try {
-        console.log('data', data);
         const date = data.date ? validator.toDate(data.date) : null;
         const location_id = validator.toInt(data.location_id);
         const user_id = validator.toInt(data.user_id);

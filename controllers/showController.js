@@ -35,9 +35,7 @@ async function showByIdHandler(req, res) {
 
 async function postShowHandler(req, res) {
     try {
-        // console.log('req.body', req.body);
         const response = await showService.postShow(req.body);
-        // console.log(response);
         res.json(response);
 
     } catch (error) {
