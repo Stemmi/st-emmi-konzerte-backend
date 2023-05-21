@@ -35,11 +35,7 @@ async function getShowsByLocation(id) {
         }
 
         const shows = await showsDB.getShowsByLocation(id);
-        const location = await locationsDB.getLocationById(id);
-        const userIds = [...new Set(shows.map(show => show.user_id))];
-        const users = await usersDB.getUsersByIds(userIds);
-
-        const results = outputConverters.createShowsList(shows, [location], users);
+        const results = outputConverters.createShowsList(shows);
         const response = {
             count,
             results
@@ -54,10 +50,7 @@ async function getShowsByLocation(id) {
 async function getShowById(id) {
     try {   
         const show = await showsDB.getShowById(id);
-        const location = await locationsDB.getLocationById(show.location_id);
-        const user = await usersDB.getUserById(show.user_id);
-
-        const response = outputConverters.createShowObject(show, location, user);
+        const response = outputConverters.createShowObject(show);
         return response;
 
     } catch (error) {
