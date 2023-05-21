@@ -1,14 +1,11 @@
-function createShowsList(shows, locations, users) {
+function createShowsList(shows) {
     const showsList = shows.map(function (show) {         
-        const location = locations.find(loc => loc.id === show.location_id);
-        const user = users.find(usr => usr.id === show.user_id);
         return {
             id: show.id,
             title: show.title,
             location: {
-                id: location.id,
-                name: location.name,
-                city: location.city
+                name: show.location_name,
+                city: show.location_city
             },
             date: show.date,
             text: show.text,
@@ -17,9 +14,8 @@ function createShowsList(shows, locations, users) {
                 alt: show.poster_alt
             },
             user: {
-                id: user.id,
-                name: user.name,
-                image: user.image
+                name: show.user_name,
+                image: show.user_image
             }
         }
     });

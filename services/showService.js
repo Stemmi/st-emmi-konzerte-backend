@@ -7,18 +7,12 @@ const sanitizer = require("../services/sanitizer.js");
 
 async function getShows(limit = 10, page = 1) {
     try {
-        const limitInt = +limit;
-        const offset = (page - 1) * limitInt;
+        const offset = (+page - 1) * (+limit);
         const count = await showsDB.countShows();
-        const shows = await showsDB.getShows(limitInt, offset);
+        const shows = await showsDB.getShows(+limit, offset);
         if (!shows.length) return { count: count, results: [] };
         
-        const locationIds = [...new Set(shows.map(show => show.location_id))];
-        const locations = await locationsDB.getLocationsByIds(locationIds);
-        const userIds = [...new Set(shows.map(show => show.user_id))];
-        const users = await usersDB.getUsersByIds(userIds);
-
-        const results = outputConverters.createShowsList(shows, locations, users);
+        const results = outputConverters.createShowsList(shows);
         const response = {
             count,
             results

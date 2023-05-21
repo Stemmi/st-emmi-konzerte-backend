@@ -13,7 +13,18 @@ async function countShowsByLocation(locationId) {
 }
 
 async function getShows(limit, offset) {
-    const dbQuery = "SELECT * FROM shows ORDER BY date DESC LIMIT ? OFFSET ?;";
+    const dbQuery =
+        `SELECT shows.id, shows.title, shows.date, shows.poster_filename, shows.poster_alt, shows.text,
+        locations.name AS location_name, locations.city AS location_city,
+        users.name AS user_name, users.image AS user_image
+        FROM shows
+        JOIN locations
+        ON shows.location_id = locations.id
+        JOIN users
+        ON shows.user_id = users.id
+        ORDER BY date DESC
+        LIMIT ?
+        OFFSET ?;`;
     const results = await db.query(dbQuery, [ limit, offset ]);
     return results;
 }
