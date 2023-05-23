@@ -58,7 +58,6 @@ async function getShowById(id) {
         JOIN users
         ON shows.user_id = users.id
         WHERE shows.id = ?;`;
-    // "SELECT * FROM shows WHERE id = ?;";
     const results = await db.query(dbQuery, id);
     return results[0];
 }

@@ -27,6 +27,6 @@ async function getLocationById(id) {
 module.exports = {
     countLocations,
     getLocations,
-    getLocationsByIds,
+    // getLocationsByIds,
     getLocationById
 }

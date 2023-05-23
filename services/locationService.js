@@ -68,6 +68,6 @@ async function getLatestLocation() {
 
 module.exports = {
     getLocations,
-    getLocationById,
+    // getLocationById,
     getLatestLocation
 }
