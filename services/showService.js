@@ -1,8 +1,5 @@
-const showsDB = require("../database/showsDB.js")
-const locationsDB = require("../database/locationsDB.js")
-const usersDB = require("../database/usersDB.js")
-
-const outputConverters = require("./outputConverters.js")
+const showsDB = require("../database/showsDB.js");
+const outputConverters = require("./outputConverters.js");
 const sanitizer = require("../services/sanitizer.js");
 
 async function getShows(limit = 10, page = 1) {

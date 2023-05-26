@@ -15,6 +15,18 @@ function healShow(data) {
     }
 }
 
+function healLocation(data) {
+    const lat = validator.toFloat(data.lat);
+    const long = validator.toFloat(data.long);
+    return {
+        name: text255(data.name) || null,
+        city: text255(data.city) || null,
+        url: url255(data.url) || null,
+        lat: lat,
+        long: long
+    }
+}
+
 function text255(text) {
     if (!text) return null;
     const trimmed = validator.trim(text);
@@ -23,6 +35,15 @@ function text255(text) {
     return limited;
 }
 
+function url255(text) {
+    if (!text) return null;
+    const trimmed = validator.trim(text);
+    const limited = trimmed.slice(0, 255);
+    if (!validator.isURL(limited)) return null;
+    return limited;
+}
+
 module.exports = {
-    healShow
+    healShow,
+    healLocation
 }
