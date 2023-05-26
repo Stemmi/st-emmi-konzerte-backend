@@ -49,7 +49,7 @@ async function getShowById(id) {
         `SELECT shows.id, shows.title, shows.date, shows.text,
         shows.poster_filename, shows.poster_alt,
         locations.name AS location_name, locations.city AS location_city,
-        locations.url AS location_url, locations.lat AS location_lat, locations.long AS location_long, 
+        locations.url AS location_url, locations.latitude AS location_lat, locations.longitude AS location_long, 
         users.name AS user_name, users.image AS user_image,
         shows.location_id, shows.user_id
         FROM shows
