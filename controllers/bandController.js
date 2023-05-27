@@ -33,8 +33,20 @@ async function bandsByShowHandler(req, res) {
     }
 }
 
+async function postBandHandler(req, res) {
+    try {
+        const response = await bandService.postBand(req.body);
+        res.json(response);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
 module.exports = {
     // allBandsHandler,
     // bandByIdHandler,
-    bandsByShowHandler
+    bandsByShowHandler,
+    postBandHandler
 }

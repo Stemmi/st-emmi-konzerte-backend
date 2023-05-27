@@ -27,6 +27,13 @@ function healLocation(data) {
     }
 }
 
+function healBand(data) {
+    return {
+        name: text255(data.name) || null,
+        url: url255(data.url) || null
+    }
+}
+
 function text255(text) {
     if (!text) return null;
     const trimmed = validator.trim(text);
@@ -45,5 +52,6 @@ function url255(text) {
 
 module.exports = {
     healShow,
-    healLocation
+    healLocation,
+    healBand
 }

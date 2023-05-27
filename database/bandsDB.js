@@ -29,9 +29,16 @@ async function getBandsByShowId(showId) {
     return results;
 }
 
+async function insertBand(params) {
+    const dbQuery = "INSERT INTO bands (name, url) VALUES (?, ?);";
+    const results = await db.query(dbQuery, params);
+    return results;
+}
+
 module.exports = {
     // countBands,
     // getBands,
-    // getBandById,
-    getBandsByShowId
+    getBandById,
+    getBandsByShowId,
+    insertBand
 }

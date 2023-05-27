@@ -5,7 +5,7 @@ const cors = require("cors");
 
 const showRouter = require("./routes/showRouter");
 const locationRouter = require("./routes/locationRouter");
-// const bandRouter = require("./routes/bandRouter");
+const bandRouter = require("./routes/bandRouter");
 const userRouter = require("./routes/userRouter");
 
 const app = express();
@@ -15,7 +15,7 @@ app.use(express.json());
 
 app.use("/api/shows", showRouter);
 app.use("/api/locations", locationRouter);
-// app.use("/api/bands", bandRouter);
+app.use("/api/bands", bandRouter);
 app.use("/api/users", userRouter);
 
 const port = 3000;
