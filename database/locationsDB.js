@@ -7,7 +7,7 @@ async function countLocations() {
 }
 
 async function getLocations() {
-    const dbQuery = "SELECT * FROM locations;";
+    const dbQuery = "SELECT * FROM locations ORDER BY city, name;";
     const results = await db.query(dbQuery);
     return results;
 }

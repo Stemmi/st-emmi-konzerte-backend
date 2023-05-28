@@ -7,7 +7,7 @@ async function countBands() {
 }
 
 async function getBands() {
-    const dbQuery = "SELECT * FROM bands;";
+    const dbQuery = "SELECT * FROM bands ORDER BY name;";
     const results = await db.query(dbQuery);
     return results;
 }
@@ -36,8 +36,8 @@ async function insertBand(params) {
 }
 
 module.exports = {
-    // countBands,
-    // getBands,
+    countBands,
+    getBands,
     getBandById,
     getBandsByShowId,
     insertBand

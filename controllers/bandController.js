@@ -45,7 +45,7 @@ async function postBandHandler(req, res) {
 }
 
 module.exports = {
-    // allBandsHandler,
+    allBandsHandler,
     // bandByIdHandler,
     bandsByShowHandler,
     postBandHandler

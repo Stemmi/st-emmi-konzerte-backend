@@ -3,7 +3,7 @@ const router = express.Router();
 
 const bandController = require("../controllers/bandController");
 
-// router.get("/", bandController.allBandsHandler);
+router.get("/", bandController.allBandsHandler);
 // router.get("/:id", bandController.bandByIdHandler);
 
 router.post("/", bandController.postBandHandler);
