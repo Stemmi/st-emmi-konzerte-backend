@@ -1,4 +1,5 @@
 const showsDB = require("../database/showsDB.js");
+const showsHasBandsDB = require("../database/showsHasBandsDB.js");
 const outputConverters = require("./outputConverters.js");
 const sanitizer = require("../services/sanitizer.js");
 
@@ -43,8 +44,15 @@ async function getShowById(id) {
 async function postShow(data) {
     const safeData = sanitizer.healShow(data);
     const params = convertToParams(safeData);
-    const response = await showsDB.insertShow(params);
-    const insertedShow = getShowById(response.insertId);
+
+    const showResponse = await showsDB.insertShow(params);
+    const showId = showResponse.insertId;
+    const bandIds = safeData.bands;
+    for (let bandId of bandIds) {
+        await showsHasBandsDB.insertShowHasBand([showId, bandId]);
+    }
+
+    const insertedShow = getShowById(showId);
     return insertedShow;
 }
 
