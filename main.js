@@ -13,6 +13,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use('/static', express.static('public'));
+
 app.use("/api/shows", showRouter);
 app.use("/api/locations", locationRouter);
 app.use("/api/bands", bandRouter);
