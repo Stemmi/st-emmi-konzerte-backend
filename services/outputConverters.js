@@ -28,6 +28,7 @@ function createShowObject(show) {
         title: show.title,
         date: show.date,
         location: {
+            id: show.location_id,
             name: show.location_name,
             city: show.location_city,
             url: show.location_url,
