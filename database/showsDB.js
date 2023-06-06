@@ -74,6 +74,12 @@ async function insertShow(params) {
     return results;
 }
 
+async function updateShow(params) {
+    const dbQuery = "UPDATE shows SET title = ?, location_id = ?, date = ?, text = ?, poster_filename = ?, poster_alt = ?, user_id = ? WHERE id = ?;";
+    const results = await db.query(dbQuery, params);
+    return results;
+}
+
 module.exports = {
     countShows,
     countShowsByLocation,
@@ -81,5 +87,6 @@ module.exports = {
     getShowsByLocation,
     getShowById,
     getLatestShow,
-    insertShow
+    insertShow,
+    updateShow
 }

@@ -45,8 +45,14 @@ async function postShowHandler(req, res) {
 }
 
 async function putShowHandler(req, res) {
-    console.log('put');
-    res.json({status: 'put'});
+    try {
+        const response = await showService.putShow(req.body);
+        res.json(response);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Internal Server Error");
+    }
 }
 
 module.exports = {

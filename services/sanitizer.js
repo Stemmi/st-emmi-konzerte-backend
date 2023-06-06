@@ -1,11 +1,13 @@
 const validator = require('validator');
 
 function healShow(data) {
+    const id = validator.toInt(data.id+'');
     const date = validator.toDate(data.date+'');
     const location_id = validator.toInt(data.location_id+'');
     const user_id = validator.toInt(data.user_id+'');
     const bands = data.bands ? data.bands.map((band) => validator.toInt(band+'')) : [];
     return {
+        id: id,
         title: text255(data.title+'') || null,
         location_id: location_id,
         date: date,

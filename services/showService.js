@@ -56,6 +56,22 @@ async function postShow(data) {
     return insertedShow;
 }
 
+async function putShow(data) {
+    const safeData = sanitizer.healShow(data);
+    const params = convertToParams(safeData);
+
+    const showResponse = await showsDB.updateShow(params);
+    const showId = data.id;
+    const bandIds = safeData.bands;
+    for (let bandId of bandIds) {
+        await showsHasBandsDB.insertShowHasBand([showId, bandId]);
+    }
+
+    const insertedShow = getShowById(showId);
+    return insertedShow;
+}
+
+
 function convertToParams(show) {
     return [
         show.title || null,
@@ -64,7 +80,8 @@ function convertToParams(show) {
         show.text || null,
         show.poster_filename || null,
         show.poster_alt || null,
-        show.user_id || null
+        show.user_id || null,
+        show.id || null
     ];
 }
 
@@ -72,5 +89,6 @@ module.exports = {
     getShows,
     getShowsByLocation,
     getShowById,
-    postShow
+    postShow,
+    putShow
 }
