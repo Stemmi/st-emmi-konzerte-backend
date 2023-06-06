@@ -1,87 +1,76 @@
-const showsDB = require("../database/showsDB.js")
-const locationsDB = require("../database/locationsDB.js")
-const usersDB = require("../database/usersDB.js")
-
-const outputConverters = require("./outputConverters.js")
+const showsDB = require("../database/showsDB.js");
+const showsHasBandsDB = require("../database/showsHasBandsDB.js");
+const outputConverters = require("./outputConverters.js");
 const sanitizer = require("../services/sanitizer.js");
 
 async function getShows(limit = 10, page = 1) {
-    try {
-        const limitInt = +limit;
-        const offset = (page - 1) * limitInt;
-        const count = await showsDB.countShows();
-        const shows = await showsDB.getShows(limitInt, offset);
-        if (!shows.length) return { count: count, results: [] };
-        
-        const locationIds = [...new Set(shows.map(show => show.location_id))];
-        const locations = await locationsDB.getLocationsByIds(locationIds);
-        const userIds = [...new Set(shows.map(show => show.user_id))];
-        const users = await usersDB.getUsersByIds(userIds);
-
-        const results = outputConverters.createShowsList(shows, locations, users);
-        const response = {
-            count,
-            results
-        }
-        return response;
-
-    } catch (error) {
-        throw error;
+    const offset = (+page - 1) * (+limit);
+    const count = await showsDB.countShows();
+    const shows = await showsDB.getShows(+limit, offset);
+    if (!shows.length) return { count: count, results: [] };
+    
+    const results = outputConverters.createShowsList(shows);
+    const response = {
+        count,
+        results
     }
+    return response;
 }
 
 async function getShowsByLocation(id) {
-    try {
-        const count = await showsDB.countShowsByLocation(id);
-        if (count === 0) {
-            return {
-                count: 0,
-                results: []
-            }
+    const count = await showsDB.countShowsByLocation(id);
+    if (count === 0) {
+        return {
+            count: 0,
+            results: []
         }
-
-        const shows = await showsDB.getShowsByLocation(id);
-        const location = await locationsDB.getLocationById(id);
-        const userIds = [...new Set(shows.map(show => show.user_id))];
-        const users = await usersDB.getUsersByIds(userIds);
-
-        const results = outputConverters.createShowsList(shows, [location], users);
-        const response = {
-            count,
-            results
-        }
-        return response;
-
-    } catch (error) {
-        throw error;
     }
+
+    const shows = await showsDB.getShowsByLocation(id);
+    const results = outputConverters.createShowsList(shows);
+    const response = {
+        count,
+        results
+    }
+    return response;
 }
 
 async function getShowById(id) {
-    try {   
-        const show = await showsDB.getShowById(id);
-        const location = await locationsDB.getLocationById(show.location_id);
-        const user = await usersDB.getUserById(show.user_id);
-
-        const response = outputConverters.createShowObject(show, location, user);
-        return response;
-
-    } catch (error) {
-        throw error;
-    }
+    const show = await showsDB.getShowById(id);
+    const response = outputConverters.createShowObject(show);
+    return response;
 }
 
 async function postShow(data) {
-    try {
-        const safeData = sanitizer.healShow(data);
-        console.log('safeData', safeData);
-        const params = convertToParams(safeData);
-        const response = await showsDB.insertShow(params);
-        console.log('response', response);
-    } catch (error) {
-        throw error;
+    const safeData = sanitizer.healShow(data);
+    const params = convertToParams(safeData);
+
+    const showResponse = await showsDB.insertShow(params);
+    const showId = showResponse.insertId;
+    const bandIds = safeData.bands;
+    for (let bandId of bandIds) {
+        await showsHasBandsDB.insertShowHasBand([showId, bandId]);
     }
+
+    const insertedShow = getShowById(showId);
+    return insertedShow;
 }
+
+async function putShow(data) {
+    const safeData = sanitizer.healShow(data);
+    const params = convertToParams(safeData);
+
+    const showResponse = await showsDB.updateShow(params);
+    const showId = data.id;
+    const bandIds = safeData.bands;
+    for (let bandId of bandIds) {
+        await showsHasBandsDB.insertShowHasBand([showId, bandId]);
+    }
+
+    const insertedShow = getShowById(showId);
+    return insertedShow;
+}
+
 
 function convertToParams(show) {
     return [
@@ -91,7 +80,8 @@ function convertToParams(show) {
         show.text || null,
         show.poster_filename || null,
         show.poster_alt || null,
-        show.user_id || null
+        show.user_id || null,
+        show.id || null
     ];
 }
 
@@ -99,5 +89,6 @@ module.exports = {
     getShows,
     getShowsByLocation,
     getShowById,
-    postShow
+    postShow,
+    putShow
 }

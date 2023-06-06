@@ -9,4 +9,6 @@ router.get("/latest", locationController.latestLocationHandler);
 router.get("/:id/shows", showController.showsByLocationHandler);
 // router.get("/:id", locationController.locationByIdHandler);
 
+router.post("/", locationController.postLocationHandler);
+
 module.exports = router;

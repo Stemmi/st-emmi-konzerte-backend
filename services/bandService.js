@@ -1,66 +1,71 @@
 const bandsDB = require("../database/bandsDB.js");
+const sanitizer = require("../services/sanitizer.js");
 
 async function getBands() {
-    try {
-        const count = await bandsDB.countBands();
-        const bands = await bandsDB.getBands();
+    const count = await bandsDB.countBands();
+    const bands = await bandsDB.getBands();
 
-        const results = bands.map(function(band) {
-            return {
-                id: band.id,
-                name: band.name,
-                url: band.url
-            }
-        });
-        const response = {
-            count,
-            results
-        }
-        
-        return response;
-    } catch (error) {
-        throw error;
-    }
-}
-
-async function getBandById(id) {
-    try {
-        const band = await bandsDB.getBandById(id);
-
-        const response = {
+    const results = bands.map(function(band) {
+        return {
             id: band.id,
             name: band.name,
             url: band.url
         }
-
-        return response;
-    } catch (error) {
-        throw error;
+    });
+    const response = {
+        count,
+        results
     }
+    
+    return response;
+}
+
+async function getBandById(id) {
+    const band = await bandsDB.getBandById(id);
+
+    const response = {
+        id: band.id,
+        name: band.name,
+        url: band.url
+    }
+
+    return response;
 }
 
 async function getBandsByShowId(showId) {
-    try {
-        const bands = await bandsDB.getBandsByShowId(showId);
+    const bands = await bandsDB.getBandsByShowId(showId);
 
-        const results = bands.map(function(band) {
-            return {
-                id: band.id,
-                name: band.name,
-                url: band.url
-            }
-        });
-        const response = {
-            results
+    const results = bands.map(function(band) {
+        return {
+            id: band.id,
+            name: band.name,
+            url: band.url
         }
-        return response;
-    } catch (error) {
-        throw error;
+    });
+    const response = {
+        results
     }
+    return response;
+}
+
+async function postBand(data) {
+    const safeData = sanitizer.healBand(data);
+    const params = convertToParams(safeData);
+    const response = await bandsDB.insertBand(params);
+    const insertedBand = getBandById(response.insertId);
+    return insertedBand;
+}
+
+function convertToParams(band) {
+    return [
+        band.name || null,
+        band.url || null
+    ];
 }
 
 module.exports = {
     getBands,
     getBandById,
-    getBandsByShowId
+    getBandsByShowId,
+    postBand
 }

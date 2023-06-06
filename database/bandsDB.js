@@ -7,7 +7,7 @@ async function countBands() {
 }
 
 async function getBands() {
-    const dbQuery = "SELECT * FROM bands;";
+    const dbQuery = "SELECT * FROM bands ORDER BY name;";
     const results = await db.query(dbQuery);
     return results;
 }
@@ -24,14 +24,22 @@ async function getBandsByShowId(showId) {
     ON shows_has_bands.show_id = shows.id
     JOIN bands
     ON bands.id = shows_has_bands.band_id
-    WHERE shows.id = ?;`;
+    WHERE shows.id = ?
+    ORDER BY shows_has_bands.created_at, shows_has_bands.updated_at;`;
     const results = await db.query(dbQuery, showId);
     return results;
 }
 
+async function insertBand(params) {
+    const dbQuery = "INSERT INTO bands (name, url) VALUES (?, ?);";
+    const results = await db.query(dbQuery, params);
+    return results;
+}
+
 module.exports = {
-    // countBands,
-    // getBands,
-    // getBandById,
-    getBandsByShowId
+    countBands,
+    getBands,
+    getBandById,
+    getBandsByShowId,
+    insertBand
 }

@@ -7,7 +7,7 @@ async function countLocations() {
 }
 
 async function getLocations() {
-    const dbQuery = "SELECT * FROM locations;";
+    const dbQuery = "SELECT * FROM locations ORDER BY city, name;";
     const results = await db.query(dbQuery);
     return results;
 }
@@ -24,9 +24,16 @@ async function getLocationById(id) {
     return results[0];
 }
 
+async function insertLocation(params) {
+    const dbQuery = "INSERT INTO locations (name, city, url, latitude, longitude) VALUES (?, ?, ?, ?, ?);";
+    const results = await db.query(dbQuery, params);
+    return results;
+}
+
 module.exports = {
     countLocations,
     getLocations,
-    getLocationsByIds,
-    getLocationById
+    // getLocationsByIds,
+    getLocationById,
+    insertLocation
 }

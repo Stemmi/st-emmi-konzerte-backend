@@ -34,21 +34,25 @@ async function showByIdHandler(req, res) {
 }
 
 async function postShowHandler(req, res) {
-    try {   
+    try {
         const response = await showService.postShow(req.body);
-        console.log(response);
         res.json(response);
 
     } catch (error) {
         console.log(error);
         res.status(500).send("Internal Server Error");
     }
-    
 }
 
 async function putShowHandler(req, res) {
-    console.log('put');
-    res.json({status: 'put'});
+    try {
+        const response = await showService.putShow(req.body);
+        res.json(response);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Internal Server Error");
+    }
 }
 
 module.exports = {

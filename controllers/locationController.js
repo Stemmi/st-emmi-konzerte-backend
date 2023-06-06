@@ -33,8 +33,20 @@ async function latestLocationHandler(req, res) {
     } 
 }
 
+async function postLocationHandler(req, res) {
+    try {
+        const response = await locationService.postLocation(req.body);
+        res.json(response);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
 module.exports = {
     allLocationsHandler,
     // locationByIdHandler,
-    latestLocationHandler
+    latestLocationHandler,
+    postLocationHandler
 }
