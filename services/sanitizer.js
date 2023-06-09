@@ -41,8 +41,11 @@ function healBand(data) {
 function text255(text) {
     if (!text) return null;
     const trimmed = validator.trim(text+'');
-    const cleaned = trimmed.replace(/([\/|\\]|"|&|´|`|{|}|<|>|')/g, "");
-    const escaped = validator.escape(cleaned);
+    // const cleaned = trimmed.replace(/([\/|\\]|"|&|´|`|{|}|<|>|')/g, "");
+    const cleaned = trimmed;
+    // const escaped = validator.escape(cleaned);
+    const escaped = cleaned;
+
     const limited = escaped.slice(0, 255);
     return limited;
 }
