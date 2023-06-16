@@ -60,9 +60,12 @@ async function putShow(data) {
     const safeData = sanitizer.healShow(data);
     const params = convertToParams(safeData);
 
-    const showResponse = await showsDB.updateShow(params);
+    await showsDB.updateShow(params);
     const showId = data.id;
     const bandIds = safeData.bands;
+
+    await showsHasBandsDB.deleteAllBandsFromShow(showId);
+
     for (let bandId of bandIds) {
         await showsHasBandsDB.insertShowHasBand([showId, bandId]);
     }
