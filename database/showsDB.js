@@ -81,7 +81,6 @@ async function updateShow(params) {
 }
 
 async function deleteShow(id) {
-    console.log('delete show', [id])
     const dbQuery = "DELETE FROM shows WHERE id = ?;";
     const results = await db.query(dbQuery, [id]);
     return results;
