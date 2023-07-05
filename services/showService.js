@@ -64,6 +64,11 @@ async function putShow(data) {
     return insertedShow;
 }
 
+async function deleteShow(id) { 
+    const response = await multipleDB.deleteShow(id);
+    return response;
+}
+
 
 function convertToParams(show) {
     return [
@@ -83,5 +88,6 @@ module.exports = {
     getShowsByLocation,
     getShowById,
     postShow,
-    putShow
+    putShow,
+    deleteShow
 }

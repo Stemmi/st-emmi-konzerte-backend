@@ -34,7 +34,21 @@ async function updateShowWithBands(params, bandIds, showId) {
     }
 }
 
+async function deleteShow(showId) {
+    try {
+        db.startTransaction();
+        await showsHasBandsDB.deleteAllBandsFromShow(showId);
+        const response = await showsDB.deleteShow(showId);
+        db.commit();
+        return response;
+    } catch (err) {
+        db.rollback();
+        throw err;
+    }
+}
+
 module.exports = {
     insertShowWithBands,
-    updateShowWithBands
+    updateShowWithBands,
+    deleteShow
 }

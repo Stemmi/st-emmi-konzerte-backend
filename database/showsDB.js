@@ -80,6 +80,13 @@ async function updateShow(params) {
     return results;
 }
 
+async function deleteShow(id) {
+    console.log('delete show', [id])
+    const dbQuery = "DELETE FROM shows WHERE id = ?;";
+    const results = await db.query(dbQuery, [id]);
+    return results;
+}
+
 module.exports = {
     countShows,
     countShowsByLocation,
@@ -88,5 +95,6 @@ module.exports = {
     getShowById,
     getLatestShow,
     insertShow,
-    updateShow
+    updateShow,
+    deleteShow
 }

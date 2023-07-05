@@ -55,10 +55,22 @@ async function putShowHandler(req, res) {
     }
 }
 
+async function deleteShowHandler(req, res) {
+    try {
+        const response = await showService.deleteShow(req.params.id);
+        res.json(response);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
 module.exports = {
     allShowsHandler,
     showsByLocationHandler,
     showByIdHandler,
     postShowHandler,
-    putShowHandler
+    putShowHandler,
+    deleteShowHandler
 }
