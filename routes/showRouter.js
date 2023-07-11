@@ -10,5 +10,6 @@ router.get("/:id/bands", bandController.bandsByShowHandler);
 
 router.post("/", showController.postShowHandler);
 router.put("/:id", showController.putShowHandler);
+router.delete("/:id", showController.deleteShowHandler);
 
 module.exports = router;

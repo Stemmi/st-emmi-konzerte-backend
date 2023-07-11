@@ -1,5 +1,5 @@
 const showsDB = require("../database/showsDB.js");
-const showsHasBandsDB = require("../database/showsHasBandsDB.js");
+const multipleDB = require("../database/multipleDB.js");
 const outputConverters = require("./outputConverters.js");
 const sanitizer = require("../services/sanitizer.js");
 
@@ -44,31 +44,29 @@ async function getShowById(id) {
 async function postShow(data) {
     const safeData = sanitizer.healShow(data);
     const params = convertToParams(safeData);
-
-    const showResponse = await showsDB.insertShow(params);
-    const showId = showResponse.insertId;
     const bandIds = safeData.bands;
-    for (let bandId of bandIds) {
-        await showsHasBandsDB.insertShowHasBand([showId, bandId]);
-    }
 
-    const insertedShow = getShowById(showId);
+    const response = await multipleDB.insertShowWithBands(params, bandIds);
+
+    const insertedShow = getShowById(response.insertId);
     return insertedShow;
 }
 
 async function putShow(data) {
     const safeData = sanitizer.healShow(data);
     const params = convertToParams(safeData);
-
-    const showResponse = await showsDB.updateShow(params);
-    const showId = data.id;
     const bandIds = safeData.bands;
-    for (let bandId of bandIds) {
-        await showsHasBandsDB.insertShowHasBand([showId, bandId]);
-    }
+    const showId = data.id;
+
+    await multipleDB.updateShowWithBands(params, bandIds, showId)
 
     const insertedShow = getShowById(showId);
     return insertedShow;
+}
+
+async function deleteShow(id) { 
+    const response = await multipleDB.deleteShow(id);
+    return response;
 }
 
 
@@ -90,5 +88,6 @@ module.exports = {
     getShowsByLocation,
     getShowById,
     postShow,
-    putShow
+    putShow,
+    deleteShow
 }

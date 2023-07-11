@@ -6,6 +6,13 @@ async function insertShowHasBand(params) {
     return results;
 }
 
+async function deleteAllBandsFromShow(showId) {
+    const dbQuery = "DELETE FROM shows_has_bands WHERE show_id = ?;";
+    const results = await db.query(dbQuery, [showId]);
+    return results;
+}
+
 module.exports = {
-    insertShowHasBand
+    insertShowHasBand,
+    deleteAllBandsFromShow
 }
