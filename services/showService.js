@@ -42,6 +42,9 @@ async function getShowById(id) {
 }
 
 async function postShow(data) {
+    // const validation = sanitizer.validateShow(data);
+    // if (!validation.passed) return validation;
+
     const safeData = sanitizer.healShow(data);
     const params = convertToParams(safeData);
     const bandIds = safeData.bands;
@@ -53,6 +56,9 @@ async function postShow(data) {
 }
 
 async function putShow(data) {
+    // const validation = sanitizer.validateShow(data);
+    // if (!validation.passed) return validation;
+
     const safeData = sanitizer.healShow(data);
     const params = convertToParams(safeData);
     const bandIds = safeData.bands;

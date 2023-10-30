@@ -58,8 +58,44 @@ function url255(text) {
     return limited;
 }
 
+function validateShow(show) {
+    const validation = {
+        id: validateNumber(show.id),
+        title: validatString(show.title),
+        location_id: validateNumber(show.location_id),
+        date: validateNumberArray(show.date.split('-')),
+        text: validatString(show.text),
+        poster_filename: validatString(show.poster_filename),
+        poster_alt: validatString(show.poster_alt),
+        bands: validateNumberArray(show.bands),
+        user_id: validateNumber(show.user_id)
+    }
+    const passed = Object.values(validation).reduce((a, b) => a && b);
+    
+    return {
+        passed,
+        validation
+    }
+}
+
+function validateNumber(num) {
+    return !num || !isNaN(num);
+}
+
+function validateNumberArray(numArray) {
+    return numArray.reduce((a, b) => validateNumber(a) && validateNumber(b));
+}
+
+function validatString(text) {
+    if (text.length > 255) return false;
+    else if (text.includes('<') || text.includes('>')) return false;
+    else if (text.toLowerCase().includes('http')) return false;
+    else return true;
+}
+
 module.exports = {
     healShow,
     healLocation,
-    healBand
+    healBand,
+    validateShow
 }
